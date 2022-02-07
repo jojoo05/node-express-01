@@ -10,11 +10,11 @@ server.listen(port, () => {
   console.log('Webserver läuft. Port: %d', port);
 });
 
-app.get('/', (req, res) => {
+app.get('/:name*', (req, res) => {
   //console.log(req);
   // res.send('Hällo ägän');
   axios
-    .get(pokeapi + 'pokemon/ditto')
+    .get(pokeapi + 'pokemon/' + req.params['name'])
     .then((reponse) => {
       res.send(
         '<img src="' +
