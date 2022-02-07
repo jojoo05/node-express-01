@@ -4,11 +4,13 @@ const server = require('http').createServer(app);
 const port = 3000;
 
 const axios = require('axios');
+// Abgerufen werden können Infos über:
+// https://pokeapi.co/api/v2/pokemon/name
 const pokeapi = 'https://pokeapi.co/api/v2/';
 
 const htmlHead = `<!DOCTYPE html>
-<!DOCTYPE html>
 <html>
+
   <head>
     <title>Hallo Welt!</title>
     <meta charset="utf-8" />
@@ -28,14 +30,25 @@ app.get('/:name*', (req, res) => {
   // res.send('Hällo ägän');
   axios
     .get(pokeapi + 'pokemon/' + req.params['name'])
-    .then((reponse) => {
+    .then((response) => {
       res.send(
         htmlHead +
           '<h1>Hier ist ' +
           req.params['name'] +
           '</h1><img src="' +
-          reponse.data.sprites.other['official-artwork'].front_default +
-          '">' +
+          response.data.sprites.other['official-artwork'].front_default +
+          '"><p>' +
+          req.params['name'] +
+          ' ist das ' +
+          response.data.order +
+          'ste Pokemon.</p>' +
+          '<p>' +
+          req.params['name'] +
+          ' ist ' +
+          response.data.weight +
+          'g schwer und ' +
+          response.data.height +
+          'cm groß.</p>' +
           htmlFoot
       );
     })
